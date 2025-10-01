@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <!-- Home Screen -->
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.dx.calcount.ui.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_addEditMealFragment"
+            app:destination="@id/addEditMealFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_mealDetailFragment"
+            app:destination="@id/mealDetailFragment" />
+    </fragment>
+
+    <!-- Settings -->
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.dx.calcount.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <!-- Meal Detail (list of food items for a meal) -->
+    <fragment
+        android:id="@+id/mealDetailFragment"
+        android:name="com.dx.calcount.ui.MealDetailFragment"
+        android:label="fragment_meal_detail"
+        tools:layout="@layout/fragment_meal_detail">
+
+        <action
+            android:id="@+id/action_mealDetailFragment_to_addEditItemFragment"
+            app:destination="@id/addEditItemFragment" />
+    </fragment>
+
+    <!-- Add/Edit Meal -->
+    <fragment
+        android:id="@+id/addEditMealFragment"
+        android:name="com.dx.calcount.ui.AddEditMealFragment"
+        android:label="fragment_add_edit_meal"
+        tools:layout="@layout/fragment_add_edit_meal">
+
+        <action
+            android:id="@+id/action_addEditMealFragment_to_addEditItemFragment"
+            app:destination="@id/addEditItemFragment" />
+    </fragment>
+
+    <!-- Add/Edit Item -->
+    <fragment
+        android:id="@+id/addEditItemFragment"
+        android:name="com.dx.calcount.ui.AddEditItemFragment"
+        android:label="fragment_add_edit_item"
+        tools:layout="@layout/fragment_add_edit_item" />
+
+</navigation>

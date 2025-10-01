@@ -1,4 +1,6 @@
 package com.dx.calcount
 
-class MyApp {
+import android.app.Application
+
+class MyApp: Application() {
 }

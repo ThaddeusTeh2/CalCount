@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.dx.calcount.R
 
-class AddEditMealFragment : Fragment() {
+class AddEditItemFragment : Fragment() {
 
 
     override fun onCreateView(
@@ -15,7 +15,7 @@ class AddEditMealFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_edit_meal, container, false)
+        return inflater.inflate(R.layout.fragment_add_edit_item, container, false)
     }
 
 
