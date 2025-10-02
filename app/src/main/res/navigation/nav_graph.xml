@@ -38,7 +38,10 @@
         android:name="com.dx.calcount.ui.MealDetailFragment"
         android:label="fragment_meal_detail"
         tools:layout="@layout/fragment_meal_detail">
-
+<argument
+    android:name="mealId"
+    app:argType="integer"
+    />
         <action
             android:id="@+id/action_mealDetailFragment_to_addEditItemFragment"
             app:destination="@id/addEditItemFragment" />
@@ -51,6 +54,12 @@
         android:label="fragment_add_edit_meal"
         tools:layout="@layout/fragment_add_edit_meal">
 
+        <argument
+            android:name="mealId"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
+
         <action
             android:id="@+id/action_addEditMealFragment_to_addEditItemFragment"
             app:destination="@id/addEditItemFragment" />
@@ -61,6 +70,12 @@
         android:id="@+id/addEditItemFragment"
         android:name="com.dx.calcount.ui.AddEditItemFragment"
         android:label="fragment_add_edit_item"
-        tools:layout="@layout/fragment_add_edit_item" />
+        tools:layout="@layout/fragment_add_edit_item" >
+        <argument
+            android:name="foodId"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
+    </fragment>
 
 </navigation>
