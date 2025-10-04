@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dx.calcount.R
-import com.dx.calcount.data.model.FoodItem
 import com.dx.calcount.databinding.FragmentMealDetailBinding
 import com.dx.calcount.ui.adapter.FoodAdapter
+import kotlinx.coroutines.launch
 
 class MealDetailFragment : Fragment() {
 
@@ -18,6 +19,7 @@ class MealDetailFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var foodAdapter: FoodAdapter
+    private val viewModel: MealViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +32,9 @@ class MealDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Get meal ID from navigation arguments
+        val mealId = arguments?.getInt("mealId") ?: 0
+
         foodAdapter = FoodAdapter { food ->
             val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment(food.id)
             findNavController().navigate(action)
@@ -40,13 +45,19 @@ class MealDetailFragment : Fragment() {
             adapter = foodAdapter
         }
 
-        // placeholder items
-        val demoFoods = listOf(
-            FoodItem(1, 1, "eggs", 150),
-            FoodItem(2, 1, "toast", 120),
-            FoodItem(3, 1, "white monster energy", 5)
-        )
-        foodAdapter.submitList(demoFoods)
+        // Observe meal with items
+        lifecycleScope.launch {
+            viewModel.mealWithItems(mealId).collect { (meal, items) ->
+                // Update toolbar title with meal name
+                binding.detailToolbar.title = meal.name
+                
+                // Update adapter with food items
+                foodAdapter.submitList(items)
+                
+                // Show/hide empty state
+                binding.llDetailEmpty.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+            }
+        }
 
         binding.fabAdd.setOnClickListener {
             val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment()

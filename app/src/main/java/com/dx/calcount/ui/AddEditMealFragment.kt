@@ -8,10 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.dx.calcount.data.model.Meal
 import com.dx.calcount.databinding.FragmentAddEditMealBinding
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -22,6 +25,7 @@ class AddEditMealFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val args: AddEditMealFragmentArgs by navArgs()
+    private val viewModel: MealViewModel by viewModels()
     private var selectedDateTime: LocalDateTime? = null
 
     override fun onCreateView(
@@ -38,9 +42,15 @@ class AddEditMealFragment : Fragment() {
 
         val mealId = args.mealId
         if (mealId != -1) {
-            // In real app: load meal from DB with ViewModel
-            binding.aeMealEdittextName.setText("Loaded Meal")
-            binding.aeMealEdittextTime.setText("2025-10-01 12:00")
+            // Load existing meal data
+            lifecycleScope.launch {
+                viewModel.mealWithItems(mealId).collect { (meal, _) ->
+                    binding.aeMealEdittextName.setText(meal.name)
+                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                    binding.aeMealEdittextTime.setText(meal.date.format(formatter))
+                    selectedDateTime = meal.date
+                }
+            }
         }
 
         // Open date+time pickers when time field clicked
@@ -58,17 +68,27 @@ class AddEditMealFragment : Fragment() {
 
             val date = selectedDateTime ?: LocalDateTime.now()
 
-            val newMeal = Meal(
+            val meal = Meal(
                 id = if (mealId != -1) mealId else 0,
                 name = name,
                 date = date,
                 totalCalories = 0 // always start at 0, updated from FoodItems later
             )
 
-            // Later: push to ViewModel/DB
-            Toast.makeText(requireContext(), "Saved meal: $newMeal", Toast.LENGTH_SHORT).show()
-
-            findNavController().navigateUp()
+            // Save meal via ViewModel
+            lifecycleScope.launch {
+                if (mealId != -1) {
+                    // Update existing meal
+                    viewModel.updateMeal(meal)
+                    Toast.makeText(requireContext(), "Meal updated", Toast.LENGTH_SHORT).show()
+                } else {
+                    // Create new meal
+                    viewModel.createMeal(meal) { newMealId ->
+                        Toast.makeText(requireContext(), "Meal created", Toast.LENGTH_SHORT).show()
+                    }
+                }
+                findNavController().navigateUp()
+            }
         }
     }
 

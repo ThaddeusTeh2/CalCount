@@ -5,12 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dx.calcount.data.model.Meal
 import com.dx.calcount.databinding.FragmentHomeBinding
 import com.dx.calcount.ui.adapter.MealAdapter
-import java.time.LocalDateTime
+import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class HomeFragment : Fragment() {
 
@@ -18,6 +20,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var mealAdapter: MealAdapter
+    private val viewModel: MealViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,13 +45,14 @@ class HomeFragment : Fragment() {
             adapter = mealAdapter
         }
 
-        // temp fake data until DB is wired
-        val demoMeals = listOf(
-            Meal(1, "Breakfast", LocalDateTime.now(), 500),
-            Meal(2, "Lunch", LocalDateTime.now(), 750),
-            Meal(3, "Dinner", LocalDateTime.now(), 600),
-        )
-        mealAdapter.submitList(demoMeals)
+        // Observe meals for today
+        lifecycleScope.launch {
+            viewModel.mealsFor(LocalDate.now()).collect { meals ->
+                mealAdapter.submitList(meals)
+                // Show/hide empty state
+                binding.llEmpty.visibility = if (meals.isEmpty()) View.VISIBLE else View.GONE
+            }
+        }
 
         // bind FAB to on click listener -> add/edit meal
         binding.fabAdd.setOnClickListener {
