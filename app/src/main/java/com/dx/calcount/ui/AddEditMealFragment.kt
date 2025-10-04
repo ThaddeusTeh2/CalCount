@@ -45,10 +45,13 @@ class AddEditMealFragment : Fragment() {
             // Load existing meal data
             lifecycleScope.launch {
                 viewModel.mealWithItems(mealId).collect { (meal, _) ->
-                    binding.aeMealEdittextName.setText(meal.name)
-                    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-                    binding.aeMealEdittextTime.setText(meal.date.format(formatter))
-                    selectedDateTime = meal.date
+                    // Check if binding is still valid before accessing views
+                    if (_binding != null) {
+                        binding.aeMealEdittextName.setText(meal.name)
+                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
+                        binding.aeMealEdittextTime.setText(meal.date.format(formatter))
+                        selectedDateTime = meal.date
+                    }
                 }
             }
         }

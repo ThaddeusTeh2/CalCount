@@ -36,7 +36,7 @@ class MealDetailFragment : Fragment() {
         val mealId = arguments?.getInt("mealId") ?: 0
 
         foodAdapter = FoodAdapter { food ->
-            val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment(food.id)
+            val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment(foodId = food.id, mealId = mealId)
             findNavController().navigate(action)
         }
 
@@ -48,19 +48,22 @@ class MealDetailFragment : Fragment() {
         // Observe meal with items
         lifecycleScope.launch {
             viewModel.mealWithItems(mealId).collect { (meal, items) ->
-                // Update toolbar title with meal name
-                binding.detailToolbar.title = meal.name
-                
-                // Update adapter with food items
-                foodAdapter.submitList(items)
-                
-                // Show/hide empty state
-                binding.llDetailEmpty.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+                // Check if binding is still valid before accessing views
+                if (_binding != null) {
+                    // Update toolbar title with meal name
+                    binding.detailToolbar.title = meal.name
+                    
+                    // Update adapter with food items
+                    foodAdapter.submitList(items)
+                    
+                    // Show/hide empty state
+                    binding.llDetailEmpty.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
+                }
             }
         }
 
         binding.fabAdd.setOnClickListener {
-            val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment()
+            val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment(mealId = mealId)
             findNavController().navigate(action)
         }
     }

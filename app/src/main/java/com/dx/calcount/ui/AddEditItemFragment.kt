@@ -35,7 +35,7 @@ class AddEditItemFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val foodId = args.foodId
-        mealId = arguments?.getInt("mealId") ?: 0
+        mealId = args.mealId
 
         if (foodId != -1) {
             // Load existing food item data
@@ -64,6 +64,11 @@ class AddEditItemFragment : Fragment() {
             val calories = caloriesText.toIntOrNull()
             if (calories == null || calories < 0) {
                 Toast.makeText(requireContext(), "Invalid calories", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (mealId == -1) {
+                Toast.makeText(requireContext(), "Invalid meal ID", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

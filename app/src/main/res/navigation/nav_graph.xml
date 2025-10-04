@@ -76,6 +76,11 @@
             app:argType="integer"
             android:defaultValue="-1"
             />
+        <argument
+            android:name="mealId"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
     </fragment>
 
 </navigation>

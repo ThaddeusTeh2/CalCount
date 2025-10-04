@@ -49,8 +49,10 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.mealsFor(LocalDate.now()).collect { meals ->
                 mealAdapter.submitList(meals)
-                // Show/hide empty state
-                binding.llEmpty.visibility = if (meals.isEmpty()) View.VISIBLE else View.GONE
+                // Show/hide empty state - check if binding is still valid
+                if (_binding != null) {
+                    binding.llEmpty.visibility = if (meals.isEmpty()) View.VISIBLE else View.GONE
+                }
             }
         }
 
