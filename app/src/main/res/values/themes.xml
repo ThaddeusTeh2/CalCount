@@ -18,9 +18,9 @@
         <item name="colorOnError">@color/white</item>
 
 
-        <item name="android:fontFamily">@font/font_jetbrains</item>
+        <item name="android:fontFamily">@font/font_nothing</item>
 
-        <item name="fontFamily">@font/font_jetbrains</item>
+        <item name="fontFamily">@font/font_nothing</item>
     </style>
 
 </resources>
