@@ -10,7 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dx.calcount.databinding.FragmentHomeBinding
-import com.dx.calcount.ui.adapter.MealAdapter
+import com.dx.calcount.ui.adapter.DayMealAdapter
+import com.dx.calcount.ui.adapter.DayMealItem
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
@@ -19,7 +20,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var mealAdapter: MealAdapter
+    private lateinit var dayMealAdapter: DayMealAdapter
     private val viewModel: MealViewModel by viewModels()
 
     override fun onCreateView(
@@ -34,7 +35,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // init adapter with on-card actions
-        mealAdapter = MealAdapter(
+        dayMealAdapter = DayMealAdapter(
             onOpen = { meal ->
                 val action = HomeFragmentDirections.actionHomeFragmentToMealDetailFragment(meal.id)
                 findNavController().navigate(action)
@@ -54,16 +55,17 @@ class HomeFragment : Fragment() {
 
         binding.rvMeals.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = mealAdapter
+            adapter = dayMealAdapter
         }
 
-        // Observe meals for today
+        // Observe meals for multiple days
         lifecycleScope.launch {
-            viewModel.mealsFor(LocalDate.now()).collect { meals ->
-                mealAdapter.submitList(meals)
+            viewModel.mealsForMultipleDays().collect { dayMealItems ->
+                dayMealAdapter.submitList(dayMealItems)
                 // Show/hide empty state - check if binding is still valid
                 if (_binding != null) {
-                    binding.llEmpty.visibility = if (meals.isEmpty()) View.VISIBLE else View.GONE
+                    val hasAnyMeals = dayMealItems.any { it is DayMealItem.MealItem }
+                    binding.llEmpty.visibility = if (hasAnyMeals) View.GONE else View.VISIBLE
                 }
             }
         }
