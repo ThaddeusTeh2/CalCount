@@ -23,14 +23,14 @@ class MealViewModel(application: Application) : AndroidViewModel(application) {
     private val repo = (application as MyApp).repo
     private val zone = ZoneId.systemDefault()
 
-    fun mealsFor(date: LocalDate): StateFlow<List<Meal>> {
-        val start = date.atStartOfDay().atZone(zone).toInstant().toEpochMilli()
-        val end = date.plusDays(1).atStartOfDay().atZone(zone).toInstant().toEpochMilli() - 1
-        return repo.getMealsBetween(start, end)
-            .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
-    }
+//    fun mealsFor(date: LocalDate): StateFlow<List<Meal>> {
+//        val start = date.atStartOfDay().atZone(zone).toInstant().toEpochMilli()
+//        val end = date.plusDays(1).atStartOfDay().atZone(zone).toInstant().toEpochMilli() - 1
+//        return repo.getMealsBetween(start, end)
+//            .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+//    }
 
-    fun mealsForMultipleDays(daysBack: Int = 2, daysForward: Int = 1): Flow<List<DayMealItem>> {
+    fun mealsForMultipleDays(daysBack: Int = 365, daysForward: Int = 1): Flow<List<DayMealItem>> {
         val today = LocalDate.now()
         val startDate = today.minusDays(daysBack.toLong())
         val endDate = today.plusDays(daysForward.toLong())

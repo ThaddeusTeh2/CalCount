@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dx.calcount.R
 import com.dx.calcount.data.model.Meal
 import com.dx.calcount.prefs.CaloriePrefs
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.button.MaterialButton
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -100,7 +99,7 @@ class DayMealAdapter(
     }
 
     inner class MealViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val card: MaterialCardView = view.findViewById(R.id.meal_card)
+//        private val card: MaterialCardView = view.findViewById(R.id.meal_card)
         private val title: TextView = view.findViewById(R.id.meal_title)
         private val kcal: TextView = view.findViewById(R.id.meal_total_cals)
         private val btnAddItem: MaterialButton? = view.findViewById(R.id.btn_add_item)

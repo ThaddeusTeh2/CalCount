@@ -2,6 +2,7 @@ package com.dx.calcount.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.core.content.edit
 
 class CaloriePrefs private constructor(context: Context) {
 
@@ -11,7 +12,7 @@ class CaloriePrefs private constructor(context: Context) {
     var maintenanceCalories: Int
         get() = prefs.getInt(KEY_MAINTENANCE, DEFAULT_MAINTENANCE)
         set(value) {
-            prefs.edit().putInt(KEY_MAINTENANCE, value).apply()
+            prefs.edit { putInt(KEY_MAINTENANCE, value) }
         }
 
     companion object {
