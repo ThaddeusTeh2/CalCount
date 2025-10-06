@@ -37,6 +37,16 @@
             android:textColor="@color/black"
             tools:text="total meal calories go here…" />
 
+        <TextView
+            android:id="@+id/meal_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            tools:text="the time this meal was had goes here" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

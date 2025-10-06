@@ -102,6 +102,7 @@ class DayMealAdapter(
 //        private val card: MaterialCardView = view.findViewById(R.id.meal_card)
         private val title: TextView = view.findViewById(R.id.meal_title)
         private val kcal: TextView = view.findViewById(R.id.meal_total_cals)
+        private val time: TextView = view.findViewById(R.id.meal_time)
         private val btnAddItem: MaterialButton? = view.findViewById(R.id.btn_add_item)
         private val btnEdit: MaterialButton? = view.findViewById(R.id.btn_edit_meal)
         private val btnDelete: MaterialButton? = view.findViewById(R.id.btn_delete_meal)
@@ -109,6 +110,7 @@ class DayMealAdapter(
         fun bind(meal: Meal) {
             title.text = meal.name
             kcal.text = "${meal.totalCalories} kcal"
+            time.text = meal.date.format(DateTimeFormatter.ofPattern("HH:mm"))
             applyCaloriesTextColor(meal.totalCalories)
             itemView.setOnClickListener { onOpen(meal) }
             btnAddItem?.setOnClickListener { onAddItem(meal) }
