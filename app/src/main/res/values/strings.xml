@@ -27,7 +27,7 @@
     <string name="label_food_name">Food name</string>
     <string name="label_food_calories">Food Calories</string>
     <string name="btn_submit">Submit</string>
-    <string name="settings_maintenance_title">Maintenance</string>
+    <string name="settings_maintenance_title">Target</string>
     <string name="settings_hint_number">Change</string>
     <string name="settings_btn_save">Submit</string>
     <string name="toast_saved">Saved</string>
