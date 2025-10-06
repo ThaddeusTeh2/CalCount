@@ -65,7 +65,7 @@ class AddEditMealFragment : Fragment() {
             val name = binding.aeMealEdittextName.text.toString().trim()
 
             if (name.isEmpty()) {
-                Toast.makeText(requireContext(), "Meal name required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.error_meal_name_required), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -83,11 +83,11 @@ class AddEditMealFragment : Fragment() {
                 if (mealId != -1) {
                     // Update existing meal
                     viewModel.updateMeal(meal)
-                    Toast.makeText(requireContext(), "Meal updated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.toast_meal_updated), Toast.LENGTH_SHORT).show()
                 } else {
                     // Create new meal
                     viewModel.createMeal(meal) { newMealId ->
-                        Toast.makeText(requireContext(), "Meal created", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.toast_meal_created), Toast.LENGTH_SHORT).show()
                     }
                 }
                 findNavController().navigateUp()

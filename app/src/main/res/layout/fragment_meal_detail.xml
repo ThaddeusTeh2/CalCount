@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     >
 
     <LinearLayout
@@ -18,7 +19,8 @@
             android:background="?attr/colorPrimary"
             app:titleCentered="true"
             app:titleTextColor="?attr/colorOnPrimary"
-            app:titleTextAppearance="?attr/textAppearanceTitleLarge" />
+            app:titleTextAppearance="?attr/textAppearanceTitleLarge"
+            app:title="@string/app_name" />
 
         <!-- Content area -->
         <FrameLayout
@@ -30,9 +32,9 @@
                 android:id="@+id/rvItems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="100dp"
+                android:paddingBottom="@dimen/content_padding_bottom"
                 android:clipToPadding="false"
-                android:layout_margin="8dp" />
+                android:layout_margin="@dimen/spacing_sm" />
 
             <!-- Empty state -->
             <LinearLayout
@@ -44,27 +46,19 @@
 
                 <ImageView
                     android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/empty_icon_size"
                     android:src="@drawable/ic_not" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="no_words_to_show"
+                    android:text="@string/empty_items"
                     style="@style/TextAppearance.Material3.TitleLarge.Emphasized"
                      />
             </LinearLayout>
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end|bottom"
-                android:layout_margin="20dp"
-                app:tint="?attr/colorOnPrimary"
-                app:backgroundTint="?attr/colorPrimary"
-                android:src="@drawable/ic_add" />
+
 
         </FrameLayout>
     </LinearLayout>

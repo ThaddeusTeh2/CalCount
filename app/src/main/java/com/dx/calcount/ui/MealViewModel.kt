@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -37,7 +38,7 @@ class MealViewModel(application: Application) : AndroidViewModel(application) {
     fun createMeal(meal: Meal, onComplete: (Int) -> Unit = {}) {
         viewModelScope.launch(Dispatchers.IO) {
             val id = repo.createMeal(meal)
-            onComplete(id)
+            withContext(Dispatchers.Main) { onComplete(id) }
         }
     }
 
@@ -47,10 +48,16 @@ class MealViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+    fun deleteMeal(meal: Meal) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repo.deleteMeal(meal)
+        }
+    }
+
     fun createItem(item: FoodItem, onComplete: (Int) -> Unit = {}) {
         viewModelScope.launch(Dispatchers.IO) {
             val id = repo.createItem(item)
-            onComplete(id)
+            withContext(Dispatchers.Main) { onComplete(id) }
         }
     }
 

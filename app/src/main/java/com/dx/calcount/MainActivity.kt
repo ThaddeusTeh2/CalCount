@@ -1,7 +1,6 @@
 package com.dx.calcount
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -17,7 +16,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -27,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         navController = navHost.findNavController()
 
         binding.navView.setupWithNavController(navController)
-        binding.toolbar.setupWithNavController(navController)
     }
 
 

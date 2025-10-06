@@ -7,8 +7,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dx.calcount.R
 import com.dx.calcount.data.model.FoodItem
+import com.google.android.material.button.MaterialButton
 
-class FoodAdapter(private val onClick: (FoodItem) -> Unit) : RecyclerView.Adapter<FoodAdapter.VH>() {
+class FoodAdapter(
+    private val onEdit: (FoodItem) -> Unit,
+    private val onDelete: (FoodItem) -> Unit
+) : RecyclerView.Adapter<FoodAdapter.VH>() {
 
     private val items = mutableListOf<FoodItem>()
 
@@ -30,11 +34,14 @@ class FoodAdapter(private val onClick: (FoodItem) -> Unit) : RecyclerView.Adapte
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
         private val name: TextView = view.findViewById(R.id.food_title)
         private val kcal: TextView = view.findViewById(R.id.food_total_cals)
+        private val btnEdit: MaterialButton? = view.findViewById(R.id.btn_edit_food)
+        private val btnDelete: MaterialButton? = view.findViewById(R.id.btn_delete_food)
 
         fun bind(fi: FoodItem) {
             name.text = fi.name
             kcal.text = "${fi.calories} kcal"
-            itemView.setOnClickListener { onClick(fi) }
+            btnEdit?.setOnClickListener { onEdit(fi) }
+            btnDelete?.setOnClickListener { onDelete(fi) }
         }
     }
 }

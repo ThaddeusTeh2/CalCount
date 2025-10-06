@@ -35,10 +35,15 @@ class MealDetailFragment : Fragment() {
         // Get meal ID from navigation arguments
         val mealId = arguments?.getInt("mealId") ?: 0
 
-        foodAdapter = FoodAdapter { food ->
-            val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment(foodId = food.id, mealId = mealId)
-            findNavController().navigate(action)
-        }
+        foodAdapter = FoodAdapter(
+            onEdit = { food ->
+                val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment(foodId = food.id, mealId = mealId)
+                findNavController().navigate(action)
+            },
+            onDelete = { food ->
+                viewModel.deleteItem(food)
+            }
+        )
 
         binding.rvItems.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -62,7 +67,8 @@ class MealDetailFragment : Fragment() {
             }
         }
 
-        binding.fabAdd.setOnClickListener {
+        // Optional: clicking empty state adds item
+        binding.llDetailEmpty.setOnClickListener {
             val action = MealDetailFragmentDirections.actionMealDetailFragmentToAddEditItemFragment(mealId = mealId)
             findNavController().navigate(action)
         }

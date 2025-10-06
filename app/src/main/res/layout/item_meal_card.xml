@@ -5,16 +5,16 @@
     android:id="@+id/meal_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
+    android:layout_margin="@dimen/spacing_sm"
     app:cardUseCompatPadding="true"
     app:cardElevation="2dp"
     app:strokeWidth="0dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="@dimen/card_padding">
 
         <TextView
             android:id="@+id/meal_title"
@@ -31,11 +31,39 @@
             android:id="@+id/meal_total_cals"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/spacing_sm"
             android:maxLines="3"
             android:ellipsize="end"
             android:textColor="@color/black"
             tools:text="total meal calories go here…" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_item"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/label_add_item" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_meal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/label_edit" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete_meal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/label_delete" />
+        </LinearLayout>
 
     </LinearLayout>
 

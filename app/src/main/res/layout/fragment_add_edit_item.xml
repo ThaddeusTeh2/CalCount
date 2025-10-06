@@ -6,7 +6,17 @@
     android:gravity="center"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.AddEditItemFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/ae_item_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="?attr/colorOnPrimary"
+        app:titleTextAppearance="?attr/textAppearanceTitleLarge"
+        app:title="Add / Edit Item" />
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -31,7 +41,7 @@
                     android:layout_marginBottom="12dp"
                     android:layout_marginHorizontal="8dp"
                     style="@style/TextAppearance.Material3.TitleLarge"
-                    android:text="Food name"/>
+                    android:text="@string/label_food_name"/>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ae_item_tfti_layout_name"
@@ -42,7 +52,7 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ae_item_tfti_edittext_name" android:hint="Change"
+                        android:id="@+id/ae_item_tfti_edittext_name" android:hint="@string/change"
                         android:inputType="text" android:gravity="top"
                         android:layout_width="match_parent" android:layout_height="50dp"
                         />
@@ -55,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginBottom="12dp"
-                    android:text="Food Calories" />
+                    android:text="@string/label_food_calories" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ae_item_tfti_layout_cals"
@@ -66,7 +76,7 @@
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/ae_item_tfti_edittext_cals" android:hint="Change"
+                        android:id="@+id/ae_item_tfti_edittext_cals" android:hint="@string/change"
                         android:inputType="number" android:gravity="top"
                         android:layout_width="match_parent" android:layout_height="50dp"
                         />
@@ -79,7 +89,7 @@
                 android:layout_height="wrap_content"
                 app:cornerRadius="8dp"
                 android:layout_marginHorizontal="8dp"
-                android:text="submit" />
+                android:text="@string/btn_submit" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

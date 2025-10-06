@@ -52,23 +52,23 @@ class AddEditItemFragment : Fragment() {
             val caloriesText = binding.aeItemTftiEdittextCals.text.toString().trim()
 
             if (name.isEmpty()) {
-                Toast.makeText(requireContext(), "Food name required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.error_food_name_required), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (caloriesText.isEmpty()) {
-                Toast.makeText(requireContext(), "Calories required", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.error_calories_required), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val calories = caloriesText.toIntOrNull()
             if (calories == null || calories < 0) {
-                Toast.makeText(requireContext(), "Invalid calories", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.error_invalid_calories), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             if (mealId == -1) {
-                Toast.makeText(requireContext(), "Invalid meal ID", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.error_invalid_meal_id), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -84,11 +84,11 @@ class AddEditItemFragment : Fragment() {
                 if (foodId != -1) {
                     // Update existing item
                     viewModel.updateItem(foodItem)
-                    Toast.makeText(requireContext(), "Food item updated", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.toast_item_updated), Toast.LENGTH_SHORT).show()
                 } else {
                     // Create new item
                     viewModel.createItem(foodItem) { newItemId ->
-                        Toast.makeText(requireContext(), "Food item created", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.toast_item_created), Toast.LENGTH_SHORT).show()
                     }
                 }
                 findNavController().navigateUp()

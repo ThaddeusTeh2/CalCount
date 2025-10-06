@@ -33,12 +33,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // init adapter
-        mealAdapter = MealAdapter { meal ->
-            // navigate to meal detail on click
-            val action = HomeFragmentDirections.actionHomeFragmentToMealDetailFragment(meal.id)
-            findNavController().navigate(action)
-        }
+        // init adapter with on-card actions
+        mealAdapter = MealAdapter(
+            onOpen = { meal ->
+                val action = HomeFragmentDirections.actionHomeFragmentToMealDetailFragment(meal.id)
+                findNavController().navigate(action)
+            },
+            onAddItem = { meal ->
+                val action = HomeFragmentDirections.actionHomeFragmentToAddEditItemFragment(mealId = meal.id)
+                findNavController().navigate(action)
+            },
+            onEdit = { meal ->
+                val action = HomeFragmentDirections.actionHomeFragmentToAddEditMealFragment(meal.id)
+                findNavController().navigate(action)
+            },
+            onDelete = { meal ->
+                viewModel.deleteMeal(meal)
+            }
+        )
 
         binding.rvMeals.apply {
             layoutManager = LinearLayoutManager(requireContext())
@@ -56,8 +68,10 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // bind FAB to on click listener -> add/edit meal
-        binding.fabAdd.setOnClickListener {
+
+
+        // Always-visible top Add Meal button
+        binding.btnAddMealTop.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToAddEditMealFragment()
             findNavController().navigate(action)
         }
