@@ -32,4 +32,5 @@
     <string name="settings_btn_save">Submit</string>
     <string name="toast_saved">Saved</string>
     <string name="change">Change</string>
+    <string name="change_hint">Change</string>
 </resources>

@@ -43,7 +43,7 @@
                    >
 
                    <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/setting_tfti_edittext" android:hint="Change"
+                       android:id="@+id/setting_tfti_edittext" android:hint="@string/change_hint"
                        android:inputType="number" android:gravity="top"
                        android:layout_width="match_parent" android:layout_height="@dimen/spacing_xxl"
                        />
