@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/spacing_sm"
     app:cardUseCompatPadding="true"
-    app:cardElevation="2dp"
-    app:strokeWidth="0dp">
+    app:cardElevation="@dimen/xxxxs"
+    app:strokeWidth="@dimen/zero">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textSize="@dimen/tx_l"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/black"
@@ -45,23 +45,28 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_add_item"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                app:cornerRadius="@dimen/xs"
+                android:layout_marginEnd="@dimen/xs"
                 android:text="@string/label_add_item" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_edit_meal"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                app:cornerRadius="@dimen/xs"
+                android:layout_marginEnd="@dimen/xs"
                 android:text="@string/label_edit" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_delete_meal"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/zero"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                app:cornerRadius="@dimen/xs"
                 android:text="@string/label_delete" />
         </LinearLayout>
 

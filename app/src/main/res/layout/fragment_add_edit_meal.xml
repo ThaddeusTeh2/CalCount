@@ -26,14 +26,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="25dp">
+            android:padding="@dimen/xxl">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.Material3.TitleLarge"
                 android:text="@string/label_meal_name"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="@dimen/spacing_md"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -52,8 +52,8 @@
                 android:layout_height="wrap_content"
                 style="@style/TextAppearance.Material3.TitleLarge"
                 android:text="@string/label_date_time"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginTop="@dimen/spacing_lg"
+                android:layout_marginBottom="@dimen/spacing_md"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -73,8 +73,8 @@
                 android:id="@+id/ae_meal_btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cornerRadius="8dp"
-                android:layout_marginTop="24dp"
+                app:cornerRadius="@dimen/xs"
+                android:layout_marginTop="@dimen/xxxl"
                 android:text="@string/btn_save_meal"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
