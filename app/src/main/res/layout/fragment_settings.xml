@@ -9,17 +9,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.SettingsFragment">
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical"
-       >
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-           android:gravity="center"
-           >
            <TextView
                android:id="@+id/setting_title"
                android:layout_width="wrap_content"
@@ -27,8 +16,6 @@
                style="@style/TextAppearance.Material3.HeadlineLarge"
                android:layout_marginBottom="@dimen/spacing_sm"
                android:text="@string/settings_maintenance_title"/>
-
-
 
            <LinearLayout
                android:layout_width="match_parent"
@@ -43,10 +30,12 @@
                    >
 
                    <com.google.android.material.textfield.TextInputEditText
-                       android:id="@+id/setting_tfti_edittext" android:hint="@string/change_hint"
-                       android:inputType="number" android:gravity="top"
-                       android:layout_width="match_parent" android:layout_height="@dimen/spacing_xxl"
-                       />
+                       android:id="@+id/setting_tfti_edittext"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/toolbar"
+                       android:gravity="top"
+                       android:hint="@string/change_hint"
+                       android:inputType="number" />
                </com.google.android.material.textfield.TextInputLayout>
 
                <com.google.android.material.button.MaterialButton
@@ -57,6 +46,4 @@
                    android:layout_marginHorizontal="@dimen/xs"
                    android:text="@string/settings_btn_save"/>
            </LinearLayout>
-       </LinearLayout>
-   </LinearLayout>
 </LinearLayout>

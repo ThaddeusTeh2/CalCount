@@ -54,7 +54,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ae_item_tfti_edittext_name" android:hint="@string/change"
                         android:inputType="text" android:gravity="top"
-                        android:layout_width="match_parent" android:layout_height="@dimen/xxl"
+                        android:layout_width="match_parent" android:layout_height="@dimen/spacing_xxl"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
 

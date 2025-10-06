@@ -50,7 +50,8 @@
                 android:layout_weight="1"
                 app:cornerRadius="@dimen/xs"
                 android:layout_marginEnd="@dimen/xs"
-                android:text="@string/label_add_item" />
+                app:icon="@drawable/ic_add"
+                 />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_edit_meal"
@@ -59,7 +60,8 @@
                 android:layout_weight="1"
                 app:cornerRadius="@dimen/xs"
                 android:layout_marginEnd="@dimen/xs"
-                android:text="@string/label_edit" />
+                app:icon="@drawable/ic_edit"
+                />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_delete_meal"
@@ -67,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:cornerRadius="@dimen/xs"
-                android:text="@string/label_delete" />
+                app:icon="@drawable/ic_delete" />
         </LinearLayout>
 
     </LinearLayout>
