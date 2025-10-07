@@ -14,16 +14,20 @@ import com.dx.calcount.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    // bindings
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
+    // when the view is created, do
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // inflate layout
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
 
+        // navigation
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHost.findNavController()
 
@@ -63,11 +67,16 @@ The lambda syntax defines this function inline.
 The Parameters: _ and insets
 _, insets is the list of parameters for this function.
 
-insets: This is a name you give to the second parameter passed into the function, which is the WindowInsetsCompat object.
+insets: This is a name you give to the second parameter passed into the function,
+which is the WindowInsetsCompat object.
 Your code uses this object with insets.isVisible(...), so it needs a name.
 
 _ (Underscore): This is a special convention in Kotlin.
-The underscore is used for a parameter that you do not need to use inside the function's body. In this case, the first parameter provided by the listener is the View itself (binding.root). Since your code doesn't need to reference that View object inside the lambda, you use _ to signify that you are intentionally ignoring it. This improves code readability.
+The underscore is used for a parameter that you do not need to use inside the function's body.
+In this case, the first parameter provided by the listener is the View itself (binding.root).
+Since your code doesn't need to reference that View object
+ inside the lambda, you use _ to signify that you are intentionally ignoring it.
+  This improves code readability.
 
 In short, you are telling the program: "Define a function that accepts two parameters.
  Ignore the first one, and name the second one insets so I can use it."

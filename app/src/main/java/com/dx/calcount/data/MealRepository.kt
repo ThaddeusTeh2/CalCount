@@ -14,16 +14,10 @@ import java.time.ZoneId
 
 class MealRepository(private val dao: MealDao) {
 
+    // system timezone
     private val zone: ZoneId = ZoneId.systemDefault()
 
-    private fun MealEntity.toDomain(): Meal =
-        Meal(
-            id = id,
-            name = name,
-            date = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp), zone),
-            totalCalories = totalCalories
-        )
-
+    // declare meal entities
     private fun FoodItemEntity.toDomain(): FoodItem =
         FoodItem(
             id = id,
@@ -57,16 +51,30 @@ class MealRepository(private val dao: MealDao) {
         )
 
     // -- Flows exposed to UI
+
+    // GET meals between a specific timeframe
     fun getMealsBetween(startEpoch: Long, endEpoch: Long): Flow<List<Meal>> =
         dao.getMealsBetween(startEpoch, endEpoch).map { list -> list.map { it.toDomainMeal() } }
 
+    // exposes reactive stream
+    // continuously emits specified meal & it's food items frm database whenever their data changes
+
+    //this emits Pair(type of tuple), params:  Meal(parent entity), FoodItem(list of items under that meal)
     fun getMealWithItemsFlow(mealId: Int): Flow<Pair<Meal, List<FoodItem>>> =
+        // call dao fetch query(1 meal entity + its items)
+        // {mwi ->} (transforms emitted object frm database layer model into domain layer models)
         dao.getMealWithItemsById(mealId).map { mwi ->
+            // if no matching meal
             if (mwi == null) {
+                // return placeholder
                 Pair(Meal(0, "", LocalDateTime.now(), 0), emptyList())
-            } else {
+            }
+            //otherwise
+            else {
+                // convert both MealEntity & FoodItemEntity into domain layer models
                 val mealDomain = mwi.toDomainMeal()
                 val items = mwi.items.map { it.toDomain() }
+                // wrap dem tgt in a pair
                 Pair(mealDomain, items)
             }
         }

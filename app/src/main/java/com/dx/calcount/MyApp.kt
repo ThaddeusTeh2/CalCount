@@ -5,6 +5,7 @@ import androidx.room.Room
 import com.dx.calcount.data.MealRepository
 import com.dx.calcount.data.model.local.AppDatabase
 
+// initialize the database
 class MyApp: Application() {
     lateinit var repo: MealRepository
 

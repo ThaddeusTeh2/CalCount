@@ -5,8 +5,10 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
+// database layer entity for food items
 @Entity(
     tableName = "food_items",
+    // meal is the fkey
     foreignKeys = [ForeignKey(
         entity = MealEntity::class,
         parentColumns = ["id"],
