@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dx.calcount.R
 import com.dx.calcount.data.model.Meal
 import com.dx.calcount.prefs.CaloriePrefs
+import com.dx.calcount.ui.utils.ConfirmationDialog
 import com.google.android.material.button.MaterialButton
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -115,7 +116,11 @@ class DayMealAdapter(
             itemView.setOnClickListener { onOpen(meal) }
             btnAddItem?.setOnClickListener { onAddItem(meal) }
             btnEdit?.setOnClickListener { onEdit(meal) }
-            btnDelete?.setOnClickListener { onDelete(meal) }
+            btnDelete?.setOnClickListener { 
+                ConfirmationDialog.showDeleteMealConfirmation(itemView.context) {
+                    onDelete(meal)
+                }
+            }
         }
 
         private fun applyCaloriesTextColor(total: Int) {

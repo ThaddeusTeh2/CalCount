@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dx.calcount.R
 import com.dx.calcount.data.model.Meal
 import com.dx.calcount.prefs.CaloriePrefs
+import com.dx.calcount.ui.utils.ConfirmationDialog
 import com.google.android.material.button.MaterialButton
 import kotlin.math.abs
 import kotlin.math.min
@@ -56,7 +57,11 @@ class MealAdapter(
             itemView.setOnClickListener { onOpen(m) }
             btnAddItem?.setOnClickListener { onAddItem(m) }
             btnEdit?.setOnClickListener { onEdit(m) }
-            btnDelete?.setOnClickListener { onDelete(m) }
+            btnDelete?.setOnClickListener { 
+                ConfirmationDialog.showDeleteMealConfirmation(itemView.context) {
+                    onDelete(m)
+                }
+            }
         }
 
         // help from GPT to create color changing logic based on maintenance / actual variation

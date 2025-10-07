@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.dx.calcount.R
 import com.dx.calcount.data.model.FoodItem
+import com.dx.calcount.ui.utils.ConfirmationDialog
 import com.google.android.material.button.MaterialButton
 
 class FoodAdapter(
@@ -41,7 +42,11 @@ class FoodAdapter(
             name.text = fi.name
             kcal.text = "${fi.calories} kcal"
             btnEdit?.setOnClickListener { onEdit(fi) }
-            btnDelete?.setOnClickListener { onDelete(fi) }
+            btnDelete?.setOnClickListener { 
+                ConfirmationDialog.showDeleteFoodConfirmation(itemView.context) {
+                    onDelete(fi)
+                }
+            }
         }
     }
 }
