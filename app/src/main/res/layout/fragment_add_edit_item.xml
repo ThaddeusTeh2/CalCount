@@ -54,8 +54,8 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ae_item_tfti_edittext_name" android:hint="@string/change"
                         android:inputType="text" android:gravity="top"
-                        android:layout_width="match_parent" android:layout_height="@dimen/spacing_xxl"
-                        />
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -78,7 +78,7 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/ae_item_tfti_edittext_cals" android:hint="@string/change"
                         android:inputType="number" android:gravity="top"
-                        android:layout_width="match_parent" android:layout_height="@dimen/spacing_xxl"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
