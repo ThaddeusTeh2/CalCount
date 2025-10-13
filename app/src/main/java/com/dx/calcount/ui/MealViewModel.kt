@@ -126,6 +126,15 @@ class MealViewModel(application: Application) : AndroidViewModel(application) {
             repo.deleteMeal(meal)
         }
     }
+
+    // get item by id
+    fun fetchItemById(itemId: Int, onComplete: (FoodItem?) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val item = repo.getItemById(itemId)
+            withContext(Dispatchers.Main) { onComplete(item) }
+        }
+    }
+
     /**
      * create a new food item linked to a meal.
      * runs insert in background and executes callback with item ID on main thread.

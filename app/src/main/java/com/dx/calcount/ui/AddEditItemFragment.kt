@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.dx.calcount.R
 import com.dx.calcount.data.model.FoodItem
 import com.dx.calcount.databinding.FragmentAddEditItemBinding
 import kotlinx.coroutines.launch
@@ -57,9 +58,15 @@ class AddEditItemFragment : Fragment() {
         mealId = args.mealId
 
         if (foodId != -1) {
-            // Load existing food item data
-            lifecycleScope.launch {
-                //
+            // load existing item and prefill form
+            viewModel.fetchItemById(foodId) { item ->
+                if (_binding == null) return@fetchItemById
+                if (item != null) {
+                    binding.aeItemTftiEdittextName.setText(item.name)
+                    binding.aeItemTftiEdittextCals.setText(item.calories.toString())
+                } else {
+                    Toast.makeText(requireContext(), getString(R.string.error_failed_load_item), Toast.LENGTH_SHORT).show()
+                }
             }
         }
 

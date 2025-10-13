@@ -28,6 +28,10 @@ interface MealDao {
     @Query("SELECT * FROM meals WHERE timestamp BETWEEN :start AND :end ORDER BY timestamp DESC")
     fun getMealsBetween(start: Long, end: Long): Flow<List<MealsWithItems>>
 
+    // SQLITE query to fetch food items by id
+    @Query("SELECT * FROM food_items WHERE id = :itemId LIMIT 1")
+    suspend fun getItemById(itemId: Int): FoodItemEntity?
+
     @Transaction
     // just a SQLITE query to get the meal by id, mapped to getMealWithItemsById
     @Query("SELECT * FROM meals WHERE id = :mealId")
@@ -43,5 +47,7 @@ interface MealDao {
 
     // SQLITE query to update a meals total calories, mapped to updateMealTotal
     @Query("UPDATE meals SET totalCalories = :total WHERE id = :mealId")
-    suspend fun updateMealTotal(mealId: Int, total: Int)
+    suspend fun updateMealTotal(mealId: Int, total: Int
+    )
+
 }

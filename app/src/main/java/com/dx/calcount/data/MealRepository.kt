@@ -100,6 +100,11 @@ class MealRepository(private val dao: MealDao) {
         return newId
     }
 
+    suspend fun getItemById(itemId: Int): FoodItem? {
+        val entity = dao.getItemById(itemId)
+        return entity?.toDomain()
+    }
+
     suspend fun updateItem(item: FoodItem) {
         dao.updateItem(item.toEntity())
         val total = dao.getTotalCaloriesForMealOnce(item.mealOwnerId)
