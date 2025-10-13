@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/meal_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/spacing_sm"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="@dimen/xxxxs"
+    app:strokeWidth="@dimen/zero">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/card_padding">
+
+        <TextView
+            android:id="@+id/meal_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/tx_l"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            tools:text="Meal name Placeholder" />
+
+        <TextView
+            android:id="@+id/meal_total_cals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            tools:text="total meal calories go here…" />
+
+        <TextView
+            android:id="@+id/meal_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="@color/black"
+            tools:text="the time this meal was had goes here" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_item"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cornerRadius="@dimen/xs"
+                android:layout_marginEnd="@dimen/xs"
+                app:icon="@drawable/ic_add"
+                 />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_edit_meal"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cornerRadius="@dimen/xs"
+                android:layout_marginEnd="@dimen/xs"
+                app:icon="@drawable/ic_edit"
+                />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_delete_meal"
+                android:layout_width="@dimen/zero"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:cornerRadius="@dimen/xs"
+                app:icon="@drawable/ic_delete" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

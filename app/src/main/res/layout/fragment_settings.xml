@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.SettingsFragment">
+
+           <TextView
+               android:id="@+id/setting_title"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               style="@style/TextAppearance.Material3.HeadlineLarge"
+               android:layout_marginBottom="@dimen/spacing_sm"
+               android:text="@string/settings_maintenance_title"/>
+
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+               <com.google.android.material.textfield.TextInputLayout
+                   android:id="@+id/setting_tfti_layout"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:layout_marginBottom="@dimen/spacing_md"
+                   android:layout_marginHorizontal="@dimen/spacing_sm"
+                   >
+
+                   <com.google.android.material.textfield.TextInputEditText
+                       android:id="@+id/setting_tfti_edittext"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/toolbar"
+                       android:gravity="top"
+                       android:hint="@string/change_hint"
+                       android:inputType="number" />
+               </com.google.android.material.textfield.TextInputLayout>
+
+               <com.google.android.material.button.MaterialButton
+                   android:id="@+id/setting_btn_save"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   app:cornerRadius="@dimen/xs"
+                   android:layout_marginHorizontal="@dimen/xs"
+                   android:text="@string/settings_btn_save"/>
+           </LinearLayout>
+</LinearLayout>

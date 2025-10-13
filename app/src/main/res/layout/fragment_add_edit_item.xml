@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.AddEditItemFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/ae_item_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="?attr/colorOnPrimary"
+        app:titleTextAppearance="?attr/textAppearanceTitleLarge"
+        app:title="Add / Edit Item" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/xxxl"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ae_item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_md"
+                    android:layout_marginHorizontal="@dimen/spacing_sm"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:text="@string/label_food_name"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ae_item_tfti_layout_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_md"
+                    android:layout_marginHorizontal="@dimen/spacing_sm"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ae_item_tfti_edittext_name" android:hint="@string/change"
+                        android:inputType="text" android:gravity="top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/ae_item_cals"
+                    style="@style/TextAppearance.Material3.TitleLarge"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/spacing_sm"
+                    android:layout_marginBottom="@dimen/spacing_md"
+                    android:text="@string/label_food_calories" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ae_item_tfti_layout_cals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/spacing_md"
+                    android:layout_marginHorizontal="@dimen/spacing_sm"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ae_item_tfti_edittext_cals" android:hint="@string/change"
+                        android:inputType="number" android:gravity="top"
+                        android:layout_width="match_parent" android:layout_height="wrap_content"
+                        />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ae_item_btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cornerRadius="@dimen/xs"
+                android:layout_marginHorizontal="@dimen/spacing_sm"
+                android:text="@string/btn_submit" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

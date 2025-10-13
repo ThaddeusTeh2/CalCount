@@ -1,0 +1,109 @@
+package com.dx.calcount.ui.adapter
+
+import android.graphics.Color
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.dx.calcount.R
+import com.dx.calcount.data.model.Meal
+import com.dx.calcount.prefs.CaloriePrefs
+import com.dx.calcount.ui.utils.ConfirmationDialog
+import com.google.android.material.button.MaterialButton
+import kotlin.math.abs
+import kotlin.math.min
+import java.time.format.DateTimeFormatter
+
+/**
+ * RecyclerView adapter for listing Meal objects.
+ * each meal card shows title, calories, and time, plus buttons for edit/delete/add.
+ * also includes logic for coloring calorie text based on maintenance deviation.
+ * wrote to handle dynamic color feedback and quick actions for meals.
+ */
+class MealAdapter(
+    private val onOpen: (Meal) -> Unit,
+    private val onAddItem: (Meal) -> Unit,
+    private val onEdit: (Meal) -> Unit,
+    private val onDelete: (Meal) -> Unit
+) : RecyclerView.Adapter<MealAdapter.VH>() {
+
+    private val items = mutableListOf<Meal>()
+
+//    fun submitList(list: List<Meal>) {
+//        items.clear()
+//        items.addAll(list)
+//        notifyDataSetChanged()
+//    }
+
+    /**
+     * inflate layout 4 meal cards.
+     */
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        val v = LayoutInflater.from(parent.context).inflate(R.layout.item_meal_card, parent, false)
+        return VH(v)
+    }
+    /**
+     * bind meal data to the card view holder.
+     */
+    override fun onBindViewHolder(holder: VH, position: Int) = holder.bind(items[position])
+    /**
+     * returns total number of meals.
+     */
+    override fun getItemCount() = items.size
+
+    /**
+     * ViewHolder for meal cards.
+     * displays calorie info, meal time, and provides action buttons.
+     */
+    inner class VH(view: View) : RecyclerView.ViewHolder(view) {
+//        private val card: MaterialCardView = view.findViewById(R.id.meal_card)
+        private val title: TextView = view.findViewById(R.id.meal_title)
+        private val kcal: TextView = view.findViewById(R.id.meal_total_cals)
+        private val time: TextView = view.findViewById(R.id.meal_time)
+        private val btnAddItem: MaterialButton? = view.findViewById(R.id.btn_add_item)
+        private val btnEdit: MaterialButton? = view.findViewById(R.id.btn_edit_meal)
+        private val btnDelete: MaterialButton? = view.findViewById(R.id.btn_delete_meal)
+
+        /**
+         * binds a Meal object to the card’s UI and hooks up event listeners.
+         * also applies dynamic color feedback to the calorie count.
+         */
+        fun bind(m: Meal) {
+            title.text = m.name
+            kcal.text = "${m.totalCalories} kcal"
+            time.text = m.date.format(DateTimeFormatter.ofPattern("HH:mm"))
+            applyCaloriesTextColor(m.totalCalories)
+
+            itemView.setOnClickListener { onOpen(m) }
+            btnAddItem?.setOnClickListener { onAddItem(m) }
+            btnEdit?.setOnClickListener { onEdit(m) }
+            btnDelete?.setOnClickListener { 
+                ConfirmationDialog.showDeleteMealConfirmation(itemView.context) {
+                    onDelete(m)
+                }
+            }
+        }
+
+        // help from GPT to create color changing logic based on maintenance / actual variation
+        private fun applyCaloriesTextColor(total: Int) {
+            val ctx = itemView.context
+            val prefs = CaloriePrefs.getInstance(ctx)
+            val maintenance = prefs.maintenanceCalories
+            val diff = total - maintenance
+
+            // Map deviation intensity (max 1000 kcal difference)
+            val maxDiff = 1000f
+            val intensity = min(abs(diff).toFloat(), maxDiff) / maxDiff
+
+            // Below/equal target = green, above = red
+            val hue = if (diff <= 0) 120f else 0f
+            val sat = 0.4f + 0.5f * intensity
+            val value = 0.9f
+
+            val hsv = floatArrayOf(hue, sat, value)
+            val color = Color.HSVToColor(hsv)
+            kcal.setTextColor(color)
+        }
+    }
+}

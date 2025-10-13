@@ -1,7 +1,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.CalCount" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/almond</item>
+        <item name="colorOnPrimary">@color/forest</item>
+        <item name="colorSecondary">@color/forest</item>
+        <item name="colorOnSecondary">@color/almond</item>
+        <item name="android:colorBackground">@color/forest</item>
+        <item name="colorSurface">@color/forest</item>
+        <item name="colorOnSurface">@color/almond</item>
     </style>
 </resources>
