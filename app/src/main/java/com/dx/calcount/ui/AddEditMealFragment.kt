@@ -19,13 +19,23 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
+/**
+ * fragment 4 creating/editing a meal.
+ * handles both adding a new meal and updating an existing one. (im NOT extending frm a base fragment)
+ */
 class AddEditMealFragment : Fragment() {
 
+    // view binding 4 this layout
     private var _binding: FragmentAddEditMealBinding? = null
     private val binding get() = _binding!!
 
+    // navarg: tells us if we're editing an existing meal or creating a new one
     private val args: AddEditMealFragmentArgs by navArgs()
+
+    // ViewModel handles all meal-related database operations
     private val viewModel: MealViewModel by viewModels()
+
+    // stores selected date and time 4d meal (def val null <- care)
     private var selectedDateTime: LocalDateTime? = null
 
     override fun onCreateView(
@@ -41,12 +51,14 @@ class AddEditMealFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val mealId = args.mealId
+        // if meal ID passed, we editing an existing meal
         if (mealId != -1) {
-            // Load existing meal data
+            // load existing meal data
             lifecycleScope.launch {
                 viewModel.mealWithItems(mealId).collect { (meal, _) ->
-                    // Check if binding is still valid before accessing views
+                    // check if binding is still valid before accessing views
                     if (_binding != null) {
+                        // fill input fields with existing meal data
                         binding.aeMealEdittextName.setText(meal.name)
                         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
                         binding.aeMealEdittextTime.setText(meal.date.format(formatter))
@@ -56,36 +68,41 @@ class AddEditMealFragment : Fragment() {
             }
         }
 
-        // Open date+time pickers when time field clicked
+        // show date+time pickers when time field clicked
         binding.aeMealEdittextTime.setOnClickListener {
             showDateTimePicker()
         }
 
+        // save lol
         binding.aeMealBtnSave.setOnClickListener {
             val name = binding.aeMealEdittextName.text.toString().trim()
 
+            // validation -> name cannot be empty
             if (name.isEmpty()) {
                 Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.error_meal_name_required), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            // use selected date, or set to current time if none chosen
             val date = selectedDateTime ?: LocalDateTime.now()
 
+            // create Meal object — this gets passed to the ViewModel for saving
             val meal = Meal(
                 id = if (mealId != -1) mealId else 0,
                 name = name,
                 date = date,
-                totalCalories = 0 // always start at 0, updated from FoodItems later
+                totalCalories = 0 // always start at 0, FoodItems update this later
             )
 
-            // Save meal via ViewModel
+            // save meal via ViewModel
             lifecycleScope.launch {
+                // if meal exists
                 if (mealId != -1) {
-                    // Update existing meal
+                    // update existing meal
                     viewModel.updateMeal(meal)
                     Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.toast_meal_updated), Toast.LENGTH_SHORT).show()
                 } else {
-                    // Create new meal
+                    // create new meal
                     viewModel.createMeal(meal) { newMealId ->
                         Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.toast_meal_created), Toast.LENGTH_SHORT).show()
                     }
@@ -95,15 +112,22 @@ class AddEditMealFragment : Fragment() {
         }
     }
 
+    /**
+     * opens a date picker, then a time picker, and stores the selected date/time.
+     * updates the text field to show what the user picked.
+     * partial help from GPT
+     */
     private fun showDateTimePicker() {
         val calendar = Calendar.getInstance()
-
+        // date picker first
         DatePickerDialog(
             requireContext(),
             { _, year, month, dayOfMonth ->
+                // after picking a date, show time picker
                 TimePickerDialog(
                     requireContext(),
                     { _, hour, minute ->
+                        // save combined date && time
                         selectedDateTime = LocalDateTime.of(year, month + 1, dayOfMonth, hour, minute)
 
                         val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
@@ -120,6 +144,7 @@ class AddEditMealFragment : Fragment() {
         ).show()
     }
 
+    // mem management, prevents mem leak by killing binding
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

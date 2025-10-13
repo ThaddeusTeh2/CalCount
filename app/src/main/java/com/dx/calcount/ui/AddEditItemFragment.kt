@@ -14,15 +14,30 @@ import com.dx.calcount.data.model.FoodItem
 import com.dx.calcount.databinding.FragmentAddEditItemBinding
 import kotlinx.coroutines.launch
 
+/**
+ * this frag handles adding or editing a FoodItem entry.
+ * -> handles both creation and modification depending on nav args.
+ * linked to a parent Meal by mealId passed through navigation.
+ */
 class AddEditItemFragment : Fragment() {
 
+    // view binding handle (nullable lifecycle safe)
     private var _binding: FragmentAddEditItemBinding? = null
     private val binding get() = _binding!!
 
+    // Safe args for navigation (contains mealId and foodId)
     private val args: AddEditItemFragmentArgs by navArgs()
+
+    // ViewModel for meal and item data ops
     private val viewModel: MealViewModel by viewModels()
+
+    // will store which meal d food item belongs to
     private var mealId: Int = 0
 
+    /**
+     * inflate layout for this fragment using ViewBinding.
+     * j returning the bound root view.
+     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +46,10 @@ class AddEditItemFragment : Fragment() {
         return binding.root
     }
 
+    /**
+     * after view is created?
+     * handle validating inputs, and saving new/edited items.
+     */
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,17 +59,22 @@ class AddEditItemFragment : Fragment() {
         if (foodId != -1) {
             // Load existing food item data
             lifecycleScope.launch {
-                // For now, we'll need to get the meal ID from navigation arguments
-                // This would need to be passed from the previous fragment
-                // For editing, we'd need to load the specific food item
-                // This is a simplified version - in a real app you'd have a getFoodItem method
+                //
             }
         }
 
+        /**
+         * Main save button logic:
+         * - Validates user input
+         * - Creates or updates FoodItem depending on mode
+         * - Persists to DB via ViewModel
+         * - Shows toast and returns to previous screen
+         */
         binding.aeItemBtnSave.setOnClickListener {
             val name = binding.aeItemTftiEdittextName.text.toString().trim()
             val caloriesText = binding.aeItemTftiEdittextCals.text.toString().trim()
 
+            // validation chain — fail fast on empty or invalid input
             if (name.isEmpty()) {
                 Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.error_food_name_required), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -72,6 +96,7 @@ class AddEditItemFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            // build model object 4 persistence
             val foodItem = FoodItem(
                 id = if (foodId != -1) foodId else 0,
                 mealOwnerId = mealId,
@@ -79,7 +104,10 @@ class AddEditItemFragment : Fragment() {
                 calories = calories
             )
 
-            // Save food item via ViewModel
+            /**
+             * Async DB call through ViewModel.
+             * handles insert && update flows.
+             */
             lifecycleScope.launch {
                 if (foodId != -1) {
                     // Update existing item
@@ -91,11 +119,15 @@ class AddEditItemFragment : Fragment() {
                         Toast.makeText(requireContext(), getString(com.dx.calcount.R.string.toast_item_created), Toast.LENGTH_SHORT).show()
                     }
                 }
+                // rtn back to previous screen after saving
                 findNavController().navigateUp()
             }
         }
     }
 
+    /**
+     * lifecycle cleanup — clear binding reference (avoid memory leaks)
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

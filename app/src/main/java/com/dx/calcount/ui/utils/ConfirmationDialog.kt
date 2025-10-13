@@ -5,7 +5,8 @@ import android.content.Context
 import com.dx.calcount.R
 
 object ConfirmationDialog {
-    
+
+    // show dialog to confirm if user wants to actually delete the meal
     fun showDeleteMealConfirmation(
         context: Context,
         onConfirm: () -> Unit
@@ -19,7 +20,8 @@ object ConfirmationDialog {
             .setNegativeButton(R.string.dialog_confirm_cancel, null)
             .show()
     }
-    
+
+   // same validation but for food items within the meal
     fun showDeleteFoodConfirmation(
         context: Context,
         onConfirm: () -> Unit

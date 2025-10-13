@@ -14,11 +14,21 @@ import com.google.android.material.button.MaterialButton
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
+/**
+ * wrapper model for RecyclerView supporting two distinct row types:
+ *  - DayHeader: date label grouping meals by day
+ *  - MealItem: actual meal card
+ */
 sealed class DayMealItem {
     data class DayHeader(val date: LocalDate) : DayMealItem()
     data class MealItem(val meal: Meal) : DayMealItem()
 }
 
+/**
+ * RecyclerView adapter responsible for displaying a list of meals grouped by day headers.
+ * handles both date separators and meal cards in a single list structure.
+ * each meal card exposes click callbacks for open, add item, edit, and delete actions.
+ */
 class DayMealAdapter(
     private val onOpen: (Meal) -> Unit,
     private val onAddItem: (Meal) -> Unit,
@@ -33,12 +43,19 @@ class DayMealAdapter(
         private const val TYPE_MEAL = 1
     }
 
+    /**
+     * replaces the adapter’s internal list with fresh dataset.
+     * no diff util used — just brute force refresh for now. (change if got time)
+     */
     fun submitList(list: List<DayMealItem>) {
         items.clear()
         items.addAll(list)
         notifyDataSetChanged()
     }
 
+    /**
+     * determines which layout 2 inflate per position.
+     */
     override fun getItemViewType(position: Int): Int {
         return when (items[position]) {
             is DayMealItem.DayHeader -> TYPE_DAY_HEADER
@@ -46,6 +63,9 @@ class DayMealAdapter(
         }
     }
 
+    /**
+     * inflate either header row or a meal card depending on view type.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_DAY_HEADER -> {
@@ -60,6 +80,9 @@ class DayMealAdapter(
         }
     }
 
+    /**
+     * delegate binding logic based on item type. (like a lightswitch heh)
+     */
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (val item = items[position]) {
             is DayMealItem.DayHeader -> (holder as DayHeaderViewHolder).bind(item.date)
@@ -69,6 +92,10 @@ class DayMealAdapter(
 
     override fun getItemCount() = items.size
 
+    /**
+     * ViewHolder for date header rows separating meal groups.
+     * sisplays human-readable day labels (Today, Ystd, etc.).
+     */
     inner class DayHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val dayText: TextView = view.findViewById(R.id.day_text)
         private val dateText: TextView = view.findViewById(R.id.date_text)
@@ -99,6 +126,10 @@ class DayMealAdapter(
         }
     }
 
+    /**
+     * ViewHolder for individual meal cards.
+     * handles text binding, color feedback, and all interaction callbacks.
+     */
     inner class MealViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 //        private val card: MaterialCardView = view.findViewById(R.id.meal_card)
         private val title: TextView = view.findViewById(R.id.meal_title)
@@ -108,6 +139,10 @@ class DayMealAdapter(
         private val btnEdit: MaterialButton? = view.findViewById(R.id.btn_edit_meal)
         private val btnDelete: MaterialButton? = view.findViewById(R.id.btn_delete_meal)
 
+        /**
+         * binds meal data to view components and wires all click actions.
+         * also applies color-coded feedback based on calorie total.
+         */
         fun bind(meal: Meal) {
             title.text = meal.name
             kcal.text = "${meal.totalCalories} kcal"
@@ -123,6 +158,13 @@ class DayMealAdapter(
             }
         }
 
+        // partial AI assisted code
+        /**
+         * visually encodes calorie balance using hue shift:
+         * - greenish for under maintenance
+         * - reddish (or pinkish as ppl said) for over maintenance
+         * intensity scales with deviation magnitude.
+         */
         private fun applyCaloriesTextColor(total: Int) {
             val ctx = itemView.context
             val prefs = CaloriePrefs.getInstance(ctx)

@@ -15,6 +15,12 @@ import kotlin.math.abs
 import kotlin.math.min
 import java.time.format.DateTimeFormatter
 
+/**
+ * RecyclerView adapter for listing Meal objects.
+ * each meal card shows title, calories, and time, plus buttons for edit/delete/add.
+ * also includes logic for coloring calorie text based on maintenance deviation.
+ * wrote to handle dynamic color feedback and quick actions for meals.
+ */
 class MealAdapter(
     private val onOpen: (Meal) -> Unit,
     private val onAddItem: (Meal) -> Unit,
@@ -30,15 +36,26 @@ class MealAdapter(
 //        notifyDataSetChanged()
 //    }
 
+    /**
+     * inflate layout 4 meal cards.
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val v = LayoutInflater.from(parent.context).inflate(R.layout.item_meal_card, parent, false)
         return VH(v)
     }
-
+    /**
+     * bind meal data to the card view holder.
+     */
     override fun onBindViewHolder(holder: VH, position: Int) = holder.bind(items[position])
-
+    /**
+     * returns total number of meals.
+     */
     override fun getItemCount() = items.size
 
+    /**
+     * ViewHolder for meal cards.
+     * displays calorie info, meal time, and provides action buttons.
+     */
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
 //        private val card: MaterialCardView = view.findViewById(R.id.meal_card)
         private val title: TextView = view.findViewById(R.id.meal_title)
@@ -48,6 +65,10 @@ class MealAdapter(
         private val btnEdit: MaterialButton? = view.findViewById(R.id.btn_edit_meal)
         private val btnDelete: MaterialButton? = view.findViewById(R.id.btn_delete_meal)
 
+        /**
+         * binds a Meal object to the card’s UI and hooks up event listeners.
+         * also applies dynamic color feedback to the calorie count.
+         */
         fun bind(m: Meal) {
             title.text = m.name
             kcal.text = "${m.totalCalories} kcal"
